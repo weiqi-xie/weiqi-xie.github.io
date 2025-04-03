@@ -67,6 +67,7 @@
 
         #title1, #title2 {
             color: white;
+
         }
 
         body {
@@ -83,7 +84,81 @@
         p {
             margin-bottom: -35px;
         }
+        #timeDisplay{
+            position: absolute;
+            bottom:50px;
+            left: 0;
+            color: white;
+            font-size: 20px;
+            white-space: nowrap;
+        }
     </style>
+    <style>
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            background-color: #333;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        li {
+            display: inline-block;
+            position: relative;
+        }
+
+        li a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            display: block;
+        }
+
+        li a:hover {
+            background-color: #111;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            min-width: 160px;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        li:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #392f2f;
+        }
+    </style>
+</head>
+<body>
+
+    <ul>
+        <li><a href="#">首页</a></li>
+        <li><a href="#">关于我们</a></li>
+        <li class="dropdown">
+            <a href="#">服务</a>
+            <div class="dropdown-content">
+                <a href="#">咨询</a>
+                <a href="#">课程</a>
+                <a href="#">技术支持</a>
+            </div>
+        </li>
+        <li><a href="#">联系我们</a></li>
+    </ul>
 </head>
 <body>
     <h1 id="title2">【网页开发】网页开发新手教程</h1>
@@ -97,12 +172,37 @@
     <iframe width="560" height="315" src="https://www.youtube.com/embed/yFZrhCioj94" allowfullscreen></iframe>
 
     <hr/>
-    <button class="button1">订阅</button>
-    <button class="button2">按赞</button>
+    <a href="https://www.youtube.com/channel/UCpu3LvsyO5xymoOFyIIEHIg"><button class="button1">订阅</button></a>
+    <button class="button2">点赞</button>
     <button class="button3">分享</button>
     <hr/>
 
     <p id="title1">87,8787次浏览</p><br/>
     <p id="title1"> 2025年3月24本视频将教学如何创造一个属于自己的网站</p>
+    <span id="timeDisplay"></span>
+    <script>
+        function updateTime() {
+      const currentTime = new Date();
+      const timeString = currentTime.toLocaleString();
+      document.getElementById('timeDisplay').textContent = timeString;
+    }
+
+    updateTime();
+    
+    setInterval(updateTime, 1000);
+    </script>
+    <style>
+        #timeDisplay {
+          position: fixed; /* 固定在页面上 */
+          bottom: 0; /* 贴近页面顶部 */
+          left: 18%; /* 居中显示 */
+          transform: translateX(-50%); /* 使其精确居中 */
+          background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+          color: white; /* 文字颜色 */
+          padding: 10px; /* 内边距 */
+          font-size: 20px; /* 字体大小 */
+          z-index: 1000; /* 确保它显示在其他内容上方 */
+        }
+      </style>
 </body>
 </html>
