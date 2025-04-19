@@ -1,208 +1,164 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>网页开发</title>
-    <style>
-        .button1 {
-            border-radius: 20px;
-            background-color: rgb(238, 37, 37);
-            width: 80px;
-            height: 50px;
-            font-size:15px;
-            border-style:solid;
-            border-width: 1px;
-            cursor: pointer;
-        }
-        
-        .button1:hover {
-            background-color: rgb(137, 3, 3);
-        }
-        .button1:active {
-            background-color: rgb(161, 154, 154);
-        }
-
-        .button2 {
-            border-radius: 20px;
-            color: rgb(0, 0, 0);
-            background-color: rgb(91, 154, 231);
-            width: 80px;
-            height: 50px;
-            font-size:15px;
-            border-style:solid;
-            border-width: 1px;
-            cursor: pointer;
-        }
-        .button2:hover {
-            background-color:rgb(82, 82, 246)
-        }
-        .button2:active {
-            background-color: rgb(161, 154, 154);
-        }
-
-        .button3 {
-            border-radius: 20px;
-            color: rgb(0, 0, 0);
-            background-color: rgb(126, 126, 126);
-            width: 80px;
-            height: 50px;
-            font-size:15px;
-            border-style:solid;
-            border-width: 1px;
-            cursor: pointer;
-        }
-        .button3:hover {
-            background-color:rgb(71, 71, 71)
-        }
-        .button3:active {
-            background-color: rgb(161, 154, 154);
-        }
-
-        .button0 {
-            height: 350px;
-            width: 700px;
-            font-size: 200px;
-        }
-
-        #title1, #title2 {
-            color: white;
-
-        }
-
-        body {
-            background-color: black;
-            font-family: Arial, sans-serif;
-        }
-
-        input[type="text"] {
-            padding: 10px;
-            margin: 10px 0;
-            width: 200px;
-            border-radius: 5px;
-        }
-        p {
-            margin-bottom: -35px;
-        }
-        #timeDisplay{
-            position: absolute;
-            bottom:50px;
-            left: 0;
-            color: white;
-            font-size: 20px;
-            white-space: nowrap;
-        }
-    </style>
-    <style>
-
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            background-color: #333;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        li {
-            display: inline-block;
-            position: relative;
-        }
-
-        li a {
-            color: white;
-            padding: 14px 20px;
-            text-decoration: none;
-            display: block;
-        }
-
-        li a:hover {
-            background-color: #111;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #333;
-            min-width: 160px;
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: white;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        li:hover .dropdown-content {
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #392f2f;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>贪吃蛇游戏</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: #222;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      font-family: sans-serif;
+      user-select: none;
+    }
+    #game {
+      background: #111;
+      border: 2px solid #0f0;
+      width: 400px;
+      height: 400px;
+      position: relative;
+      overflow: hidden;
+    }
+    .snake {
+      background-image: url("data:image/jpeg;base64,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");
+      background-size: cover;
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #0f0;
+      border-radius: 20px;
+      transition: left 0.15s linear, top 0.15s linear;
+    }
+    .food {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      border-radius: 20px;
+    }
+    #score {
+      position: absolute;
+      top: -30px;
+      left: 0;
+      font-size: 18px;
+    }
+  </style>
 </head>
 <body>
+  <div>
+    <div id="score">分数: 0</div>
+    <div id="game"></div>
+  </div>
 
-    <ul>
-        <li><a href="#">首页</a></li>
-        <li><a href="#">关于我们</a></li>
-        <li class="dropdown">
-            <a href="#">服务</a>
-            <div class="dropdown-content">
-                <a href="#">咨询</a>
-                <a href="#">课程</a>
-                <a href="#">技术支持</a>
-            </div>
-        </li>
-        <li><a href="#">联系我们</a></li>
-    </ul>
-</head>
-<body>
-    <h1 id="title2">【网页开发】网页开发新手教程</h1>
+  <script>
+    const game = document.getElementById('game');
+    const scoreEl = document.getElementById('score');
+    const gridSize = 20;
+    let snake = [{ x: 10, y: 10 }];
+    let food = { x: 5, y: 5 };
+    let dx = 0, dy = 0;
+    let score = 0;
+    let interval = 150;
+    let snakeElements = [];
 
-    <form>
-        <input type="text" name="query" placeholder="输入搜索内容">
-        <button type="search">搜索</button>
-    </form>
-    <hr/>
+    function initDraw() {
+      game.innerHTML = '';
 
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/yFZrhCioj94" allowfullscreen></iframe>
+      snakeElements = snake.map(() => {
+        const div = document.createElement('div');
+        div.classList.add('snake');
+        game.appendChild(div);
+        return div;
+      });
 
-    <hr/>
-    <a href="https://www.youtube.com/channel/UCpu3LvsyO5xymoOFyIIEHIg"><button class="button1">订阅</button></a>
-    <button class="button2">点赞</button>
-    <button class="button3">分享</button>
-    <hr/>
-
-    <p id="title1">87,8787次浏览</p><br/>
-    <p id="title1"> 2025年3月24本视频将教学如何创造一个属于自己的网站</p>
-    <span id="timeDisplay"></span>
-    <script>
-        function updateTime() {
-      const currentTime = new Date();
-      const timeString = currentTime.toLocaleString();
-      document.getElementById('timeDisplay').textContent = timeString;
+      const foodDiv = document.createElement('div');
+      foodDiv.classList.add('food');
+      foodDiv.id = 'food';
+      game.appendChild(foodDiv);
     }
 
-    updateTime();
-    
-    setInterval(updateTime, 1000);
-    </script>
-    <style>
-        #timeDisplay {
-          position: fixed; /* 固定在页面上 */
-          bottom: 0; /* 贴近页面顶部 */
-          left: 18%; /* 居中显示 */
-          transform: translateX(-50%); /* 使其精确居中 */
-          background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
-          color: white; /* 文字颜色 */
-          padding: 10px; /* 内边距 */
-          font-size: 20px; /* 字体大小 */
-          z-index: 1000; /* 确保它显示在其他内容上方 */
+    function updateDraw() {
+      scoreEl.textContent = `分数: ${score}`;
+
+      snake.forEach((part, i) => {
+        let el = snakeElements[i];
+
+        if (!el) {
+          el = document.createElement('div');
+          el.classList.add('snake');
+          game.appendChild(el);
+          snakeElements[i] = el;
         }
-      </style>
+
+        el.style.left = (part.x - 1) * 20 + 'px';
+        el.style.top = (part.y - 1) * 20 + 'px';
+      });
+
+      while (snakeElements.length > snake.length) {
+        const removed = snakeElements.pop();
+        removed.remove();
+      }
+
+      const foodDiv = document.getElementById('food');
+      foodDiv.style.left = (food.x - 1) * 20 + 'px';
+      foodDiv.style.top = (food.y - 1) * 20 + 'px';
+    }
+
+    function move() {
+      if (dx === 0 && dy === 0) return;
+
+      const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+
+      if (
+        head.x < 1 || head.x > gridSize || head.y < 1 || head.y > gridSize ||
+        snake.some(part => part.x === head.x && part.y === head.y)
+      ) {
+        alert('游戏结束！分数: ' + score);
+        snake = [{ x: 10, y: 10 }];
+        dx = dy = 0;
+        food = { x: 5, y: 5 };
+        score = 0;
+        initDraw();
+        updateDraw();
+        return;
+      }
+
+      snake.unshift(head);
+
+      if (head.x === food.x && head.y === food.y) {
+        score++;
+        document.getElementById('eat-sound').play();
+        food = {
+          x: Math.floor(Math.random() * gridSize) + 1,
+          y: Math.floor(Math.random() * gridSize) + 1
+        };
+      } else {
+        snake.pop();
+      }
+
+      updateDraw();
+    }
+
+    document.addEventListener('keydown', e => {
+      switch (e.key) {
+        case 'ArrowUp': if (dy === 0) { dx = 0; dy = -1; } break;
+        case 'ArrowDown': if (dy === 0) { dx = 0; dy = 1; } break;
+        case 'ArrowLeft': if (dx === 0) { dx = -1; dy = 0; } break;
+        case 'ArrowRight': if (dx === 0) { dx = 1; dy = 0; } break;
+      }
+    });
+
+    initDraw();
+    updateDraw();
+    setInterval(move, interval);
+  </script>
+<audio id="eat-sound" src="eat.mp3" preload="auto"></audio>
 </body>
 </html>
